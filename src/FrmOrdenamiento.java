@@ -1,12 +1,15 @@
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.WindowConstants;
+
+import servicios.ServicioDocumento;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -85,11 +88,16 @@ public class FrmOrdenamiento extends JFrame {
         tbOrdenamiento.add(btnBuscar);
         tbOrdenamiento.add(txtBuscar);
 
+        var spDocumentos = new JScrollPane(tblDocumentos);
+
         getContentPane().add(tbOrdenamiento, BorderLayout.NORTH);
-        getContentPane().add(tblDocumentos, BorderLayout.CENTER);
+        getContentPane().add(spDocumentos, BorderLayout.CENTER);
 
         String nombreArchivo = System.getProperty("user.dir")
                 + "/src/datos/Datos.csv";
+
+        ServicioDocumento.cargar(nombreArchivo);
+        ServicioDocumento.mostrar(tblDocumentos);
     }
 
     private void btnOrdenarBurbujaClick(ActionEvent evt) {
