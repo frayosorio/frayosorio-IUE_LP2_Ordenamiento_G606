@@ -72,8 +72,10 @@ public class ServicioDocumento {
     public static void ordenarBurbuja(int criterio) {
         for (int i = 0; i < documentos.size() - 1; i++) {
             for (int j = i + 1; j < documentos.size(); j++) {
-                System.out.println("d[i]="+documentos.get(i).getNombreCompleto() + " " + documentos.get(i).getDocumento());
-                System.out.println("d[j]="+documentos.get(j).getNombreCompleto() + " " + documentos.get(j).getDocumento());
+                System.out.println(
+                        "d[i]=" + documentos.get(i).getNombreCompleto() + " " + documentos.get(i).getDocumento());
+                System.out.println(
+                        "d[j]=" + documentos.get(j).getNombreCompleto() + " " + documentos.get(j).getDocumento());
 
                 if (esMayor(documentos.get(i), documentos.get(j), criterio)) {
                     intercambiar(i, j);
@@ -82,4 +84,34 @@ public class ServicioDocumento {
         }
     }
 
+    private static int getPivote(int inicio, int fin, int criterio) {
+        var pivote = inicio;
+        var documentoPivote = documentos.get(pivote);
+
+        for (int i = inicio + 1; i <= fin; i++) {
+            if (esMayor(documentoPivote, documentos.get(i), criterio)) {
+                pivote++;
+                if (i != pivote) {
+                    intercambiar(i, pivote);
+                }
+            }
+        }
+        if (inicio != pivote) {
+            intercambiar(inicio, pivote);
+        }
+
+        return pivote;
+    }
+
+    private static void ordenarRapido(int inicio, int fin, int criterio) {
+        if (fin > inicio) {
+            var pivote = getPivote(inicio, fin, criterio);
+            ordenarRapido(inicio, pivote - 1, criterio);
+            ordenarRapido(pivote + 1, fin, criterio);
+        }
+    }
+
+    public static void ordenarRapido(int criterio) {
+        ordenarRapido(0, documentos.size() - 1, criterio);
+    }
 }
