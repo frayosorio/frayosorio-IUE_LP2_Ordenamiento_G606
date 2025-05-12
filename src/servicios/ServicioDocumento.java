@@ -47,4 +47,39 @@ public class ServicioDocumento {
         var dtm = new DefaultTableModel(datos, encabezados);
         tbl.setModel(dtm);
     }
+
+    private static boolean esMayor(Documento d1, Documento d2, int criterio) {
+        if (criterio == 0) {
+            return d1.getNombreCompleto().compareTo(d2.getNombreCompleto()) > 0 ||
+                    (d1.getNombreCompleto().equals(d2.getNombreCompleto()) &&
+                            d1.getDocumento().compareTo(d2.getDocumento()) > 0);
+        } else {
+            return d1.getDocumento().compareTo(d2.getDocumento()) > 0 ||
+                    (d1.getDocumento().equals(d2.getDocumento()) &&
+                            d1.getNombreCompleto().compareTo(d2.getNombreCompleto()) > 0);
+        }
+    }
+
+    private static void intercambiar(int origen, int destino) {
+        if (0 <= origen && origen < documentos.size() &&
+                0 <= destino && destino < documentos.size()) {
+            var temporal = documentos.get(origen);
+            documentos.set(origen, documentos.get(destino));
+            documentos.set(destino, temporal);
+        }
+    }
+
+    public static void ordenarBurbuja(int criterio) {
+        for (int i = 0; i < documentos.size() - 1; i++) {
+            for (int j = i + 1; j < documentos.size(); j++) {
+                System.out.println("d[i]="+documentos.get(i).getNombreCompleto() + " " + documentos.get(i).getDocumento());
+                System.out.println("d[j]="+documentos.get(j).getNombreCompleto() + " " + documentos.get(j).getDocumento());
+
+                if (esMayor(documentos.get(i), documentos.get(j), criterio)) {
+                    intercambiar(i, j);
+                }
+            }
+        }
+    }
+
 }

@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.WindowConstants;
 
 import servicios.ServicioDocumento;
+import servicios.Util;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -102,7 +103,10 @@ public class FrmOrdenamiento extends JFrame {
 
     private void btnOrdenarBurbujaClick(ActionEvent evt) {
         if (cmbCriterio.getSelectedIndex() >= 0) {
-
+            Util.iniciarCronometro();
+            ServicioDocumento.ordenarBurbuja(cmbCriterio.getSelectedIndex());
+            txtTiempo.setText(Util.getTextoTiempoCronometro());
+            ServicioDocumento.mostrar(tblDocumentos);
         }
     }
 
@@ -119,5 +123,5 @@ public class FrmOrdenamiento extends JFrame {
     private void btnBuscar(ActionEvent evt) {
 
     }
-    
+
 }
