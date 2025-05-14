@@ -114,4 +114,41 @@ public class ServicioDocumento {
     public static void ordenarRapido(int criterio) {
         ordenarRapido(0, documentos.size() - 1, criterio);
     }
+
+    public static void ordenarInsercion(int criterio) {
+        for (int i = 1; i < documentos.size(); i++) {
+            var documentoActual = documentos.get(i);
+            // mover los documentos mayores que el actual
+            int j = i - 1;
+            while (j >= 0 && esMayor(documentos.get(j), documentoActual, criterio)) {
+                documentos.set(j + 1, documentos.get(j));
+                j--;
+            }
+            // insertar el documento
+            documentos.set(j + 1, documentoActual);
+        }
+    }
+
+    private static void ordenarInsercionRecursivo(int posicion, int criterio) {
+        if (posicion == 0) {
+            return;
+        }
+        ordenarInsercionRecursivo(posicion - 1, criterio);
+
+        var documentoActual = documentos.get(posicion);
+        //System.out.println(documentoActual.getNombreCompleto());
+        // mover los documentos mayores que el actual
+        int j = posicion - 1;
+        while (j >= 0 && esMayor(documentos.get(j), documentoActual, criterio)) {
+            //System.out.println(documentos.get(j));
+            documentos.set(j + 1, documentos.get(j));
+            j--;
+        }
+        // insertar el documento
+        documentos.set(j + 1, documentoActual);
+    }
+
+    public static void ordenarInsercionRecursivo(int criterio) {
+        ordenarInsercionRecursivo(documentos.size()-1, criterio);
+    }
 }

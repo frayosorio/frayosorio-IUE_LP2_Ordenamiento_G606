@@ -120,7 +120,12 @@ public class FrmOrdenamiento extends JFrame {
     }
 
     private void btnOrdenarInsercionClick(ActionEvent evt) {
-
+        if (cmbCriterio.getSelectedIndex() >= 0) {
+            Util.iniciarCronometro();
+            ServicioDocumento.ordenarInsercionRecursivo(cmbCriterio.getSelectedIndex());
+            txtTiempo.setText(Util.getTextoTiempoCronometro());
+            ServicioDocumento.mostrar(tblDocumentos);
+        }
     }
 
     private void btnBuscar(ActionEvent evt) {
